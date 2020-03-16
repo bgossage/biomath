@@ -1,0 +1,31 @@
+date         ,   confirmed,    deaths
+
+21 January 2020,     44,       0
+22 January 2020,     314,      6
+23 January 2020,     581,      17
+24 January 2020,     846,      25
+25 January 2020,     1320,     41
+26 January 2020,     2014,     56
+27 January 2020,     2798,     80
+28 January 2020,     4593,     106
+29 January 2020,     6065,     132
+30 January 2020,     7818,     170
+31 January 2020,     9826 ,    213 
+1 February 2020,     14557,    259  
+2 February 2020,     14557,    304 
+3 February 2020,     17391,    361 
+4 February 2020,     20630,    425  
+5 February 2020,     24554,    491   
+6 February 2020,     28276,    564 
+7 February 2020,     31481,    637 
+8 February 2020,     34886 ,   723    
+9 February 2020,     37558,    812 
+10 February 2020,    40554,     909 
+11 February 2020,    43103,    1017 
+12 February 2020,    45171,    1114 
+13 February 2020,    46997,    1368
+14 February 2020,    49053,    1381
+15 February 2020,    50580,    1524 
+16 February 2020,    51857 ,   1666 
+17 February 2020,    71429,    1772 
+18 February 2020,    73332,    1873
