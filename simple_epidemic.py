@@ -49,10 +49,20 @@ import matplotlib
 import matplotlib.pyplot
 
 # Parameters
-    r = 0.25  # The infection rate (social distancing)
-a = 0.1  # removal rate  (individual quarantine)
+r = 0.45  # The infection rate
+a = 0.2  # removal rate
+
+distancing_factor = 0.5 # 0.5
+
+recovery_rate = 0.1
+death_rate = 0.01
+quarantine_rate = 0.0  # 0.1
+
+r *= 1.0 - distancing_factor;
+a = quarantine_rate + death_rate + recovery_rate;
 
 
+conditions = "distancing"
 #
 # Define a function that computes the derivatives at time t
 # given the current populations of S, I, and R
@@ -83,7 +93,7 @@ params = [ r, a ]
 y0 = [ S0, I0, R0 ]
 
 # Make a time array for solution samples...
-tStop = 100.0
+tStop = 200.0
 tInc = 0.001
 t = numpy.arange(0., tStop, tInc)
 
@@ -97,9 +107,10 @@ Isoln = psoln[:,1]
 Rsoln = psoln[:,2]
 
 
+
 # Plot the solution...
 #matplotlib.pyplot.plot( t, Ssoln, label="Susceptibles" )
-matplotlib.pyplot.plot( t, Isoln, label="Infectives" )
+matplotlib.pyplot.plot( t, Isoln, label="Infectives, " + conditions )
 #matplotlib.pyplot.plot( t, Rsoln, label="Removed" )
 
 
