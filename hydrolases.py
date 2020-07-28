@@ -90,7 +90,7 @@ Csoln = psoln[:,1]
 km = (km1 + kp2) / kp1
 Cmax = e0 * S0 / (S0 + km) # Assuming S0 >> e0
 
-print "Cmax = ", Cmax
+print("Cmax = ", Cmax )
 
 # Plot the solution...
 matplotlib.pyplot.plot( t, Csoln, label="Enzyme/Substrate (ES)" )
