@@ -51,17 +51,16 @@ ny_data = numpy.genfromtxt('coronavirus-data/case-hosp-death.csv',
                            delimiter=',',dtype=None,encoding="utf8" )
 import matplotlib
 
-#matplotlib.use('TkAgg')  ## set the back end (a wart)
 import matplotlib.pyplot
 
 # Parameters
-r = 0.7 # The infection rate
+r = 0.4 # The infection rate
 a = 0.01  # removal rate
 
-distancing_factor = 0.6 # 0.5
+distancing_factor = 0.5 # 0.5
 
 recovery_rate = 0.1
-death_rate = 0.04
+death_rate = 0.01
 quarantine_rate = 0.0  # 0.1
 
 #r *= 1.0 - distancing_factor
@@ -101,8 +100,8 @@ def deriv( y, t, params ):
 
 
 # Initial values
-I0 = 0.002
-R0 = 0.2
+I0 = 0.0001
+R0 = 0.0
 S0 = 1.0 - R0 - I0
 D0 = 0.0
 
@@ -139,8 +138,10 @@ y0 = [ S0, I0, R0, D0 ]
 psoln_1 = scipy.integrate.odeint( deriv, y0, t_1, args=(params,) )
 
 tStart = ld_end
-tStop = 100.0
+tStop = 200.0
 r = r_start
+quarantine_rate = 0.0  # 0.1
+a = quarantine_rate + recovery_rate;
 params = [ r, a, d ]
 t_2 = numpy.arange(tStart, tStop, tInc)
 # Bundle initial conditions for ODE solver
@@ -173,21 +174,24 @@ Dsoln_2 = psoln_2[:,3]
 
 # Plot the solution...
 #matplotlib.pyplot.plot( t, Ssoln, label="Susceptibles" )
-matplotlib.pyplot.figure( 0, figsize=(8,7) )
+matplotlib.pyplot.figure( 0, figsize=(6,4) )
 
 #matplotlib.pyplot.plot( t, Isoln, label="Infectives, " + conditions, linestyle='dashed' )
-matplotlib.pyplot.plot( t_0, Rsoln_0, label="Immune Before", linestyle=':', color='r' )
-matplotlib.pyplot.plot( t_1, Rsoln_1, label="Immune Shut", linestyle='--', color='b' )
-matplotlib.pyplot.plot( t_2, Rsoln_2, label="Immune Restart", linestyle='-.', color='g' )
+#matplotlib.pyplot.plot( t_0, Rsoln_0, label="Immune Before", linestyle=':', color='g' )
+#matplotlib.pyplot.plot( t_1, Rsoln_1, label="Immune Shut", linestyle='--', color='g' )
+#matplotlib.pyplot.plot( t_2, Rsoln_2, label="Immune Restart", linestyle='-.', color='g' )
 
-matplotlib.pyplot.plot( t_0, Dsoln_0, label="Total Death Before", linestyle=':', color='r'  )
-matplotlib.pyplot.plot( t_1, Dsoln_1, label="Total Deaths Shut", linestyle='--', color='b'  )
-matplotlib.pyplot.plot( t_2, Dsoln_2, label="Total Deaths Restart", linestyle='-.', color='g'  )
+#matplotlib.pyplot.plot( t_0, Dsoln_0, label="Total Death Before", linestyle=':', color='k'  )
+#matplotlib.pyplot.plot( t_1, Dsoln_1, label="Total Deaths Shut", linestyle='--', color='k'  )
+matplotlib.pyplot.plot( t_2, Dsoln_2, label="Deaths After Restart", linestyle='-.', color='r'  )
 
 
-matplotlib.pyplot.plot( t_0, Isoln_0, label="Infectives Before", linestyle=':', color='r'  )
-matplotlib.pyplot.plot( t_1, Isoln_1, label="Infectives Shut", linestyle='--', color='b'  )
-matplotlib.pyplot.plot( t_2, Isoln_2, label="Infectives Restart", linestyle='-.', color='g'  )
+#matplotlib.pyplot.plot( t_0, Isoln_0, label="Infectives Before", linestyle=':', color='r'  )
+#matplotlib.pyplot.plot( t_1, Isoln_1, label="Infectives Shut", linestyle='--', color='r'  )
+#matplotlib.pyplot.plot( t_2, Isoln_2, label="Infectives Restart", linestyle='-.', color='r'  )
+
+#matplotlib.pyplot.axvline(x=ld_start,label="start lockdown", color='g' )
+#matplotlib.pyplot.axvline(x=ld_end,label="end lockdown", color='r' )
 
 matplotlib.pyplot.title( "Epidemic" )
 matplotlib.pyplot.legend( loc='best' )
@@ -231,16 +235,16 @@ for datestr in datestrings:
          case_data[row,1] = 0.0
     row += 1
 
-matplotlib.pyplot.title( "NY Data" )
-matplotlib.pyplot.legend( loc='best' )
-matplotlib.pyplot.xlabel( "t (days)" )
-matplotlib.pyplot.ylabel( "Fraction" )
+#matplotlib.pyplot.title( "NY Data" )
+#matplotlib.pyplot.legend( loc='best' )
+#matplotlib.pyplot.xlabel( "t (days)" )
+#matplotlib.pyplot.ylabel( "Fraction" )
 
-case_data[:,1] /= total_pop
+#case_data[:,1] /= total_pop
 
 
-matplotlib.pyplot.plot( case_data[:,0], case_data[:,1], label="Deaths" )
-matplotlib.pyplot.legend( loc='best' )
-matplotlib.pyplot.show()
+#matplotlib.pyplot.plot( case_data[:,0], case_data[:,1], label="Deaths" )
+#matplotlib.pyplot.legend( loc='best' )
+#matplotlib.pyplot.show()
 
 # EOF
